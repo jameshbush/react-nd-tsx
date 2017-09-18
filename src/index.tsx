@@ -10,7 +10,7 @@ const render = (AppComponent: any) => {
     <AppContainer>
       <AppComponent />
     </AppContainer>,
-    document.getElementById("app"),
+    document.getElementById("root"),
   );
 };
 
