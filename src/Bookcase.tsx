@@ -50,7 +50,7 @@ class Bookcase extends React.Component <IBookcaseProps> {
       const shelf = shelves.find((s: any) => s.key === book.shelf) ||
                     shelves.find((s: any) => s.key === "none");
 
-      if (shelf.books) {
+      if (!shelf.books) {
         shelf.books = [];
       }
 
