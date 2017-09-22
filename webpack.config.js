@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
@@ -28,7 +28,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: "src/index.html",
       inject: true
-    })
+    }),
   ],
   node: {
     fs: "empty"
@@ -46,6 +46,13 @@ const config = {
         test: /\.html$/,
         exclude: /node_modules/,
         loader: "html-loader"
+      },
+      {
+        test: /\.css$/,
+        loaders: [
+          'style-loader',
+          'css-loader'
+        ]
       }
     ]
   }
