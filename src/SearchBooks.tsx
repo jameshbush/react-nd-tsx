@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
+import IconArrowBack from "./icons/IconArrowBack";
 import {ISearchBooksProps} from "./interfaces";
 
 class SearchBooks extends React.Component <ISearchBooksProps> {
@@ -10,7 +11,9 @@ class SearchBooks extends React.Component <ISearchBooksProps> {
           <Link
             to="/"
             className="close-search"
-          >Close</Link>
+          >
+            <IconArrowBack padding=""/>
+          </Link>
           <div className="search-books-input-wrapper">
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.

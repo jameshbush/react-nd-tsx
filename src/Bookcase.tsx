@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
 import Bookshelf from "./Bookshelf";
+import IconOpenSearch from "./icons/IconOpenSearch";
 import {IBookcaseProps, IShelf} from "./interfaces";
 
 class Bookcase extends React.Component <IBookcaseProps> {
@@ -22,11 +23,11 @@ class Bookcase extends React.Component <IBookcaseProps> {
       <div className="list-books">
         <div className="list-books-title">
           <div className="open-search">
-            <Link
-              to="/search"
-            >Add a book</Link>
+            <Link to="/search" style={{alignItems: "center"}}>
+              <IconOpenSearch padding={"8px 0 0 0"} />
+            </Link>
           </div>
-          <h1>MyReads</h1>
+          <h1>iReads</h1>
         </div>
         <div className="list-books-content">
           {shelvedBooks

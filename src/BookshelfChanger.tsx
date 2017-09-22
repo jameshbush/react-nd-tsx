@@ -1,4 +1,5 @@
 import * as React from "react";
+import IconArrowDropDown from "./icons/IconArrowDropDown";
 import {IBookshelfChangerProps} from "./interfaces";
 
 class BookshelfChanger extends React.Component <IBookshelfChangerProps> {
