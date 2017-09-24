@@ -13,6 +13,7 @@ class SearchBooks extends React.Component <ISearchBooksProps> {
           <Link
             to="/"
             className="close-search"
+            onClick={((e) => updateQuery(""))}
           >
             <IconArrowBack padding=""/>
           </Link>

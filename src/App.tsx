@@ -26,16 +26,28 @@ class App extends React.Component {
   }
 
   public updateQuery = (query: string): void => {
-    BooksAPI.search(query).then((searchResults) => {
+    if (query === this.state.query) {
+      return undefined;
+    } else {
+      this.setState({
+        query,
+        books: this.state.books.filter((b) => b.shelf),
+      });
+    }
+
+    BooksAPI.search(query, 10)
+    .then((searchResults: IBook[]) => {
       const books = this.state.books;
 
       if (searchResults && searchResults.hasOwnProperty("length") && searchResults.length > 0) {
-        searchResults.forEach((result: any) => {
-          return (this.findBookById(result.id, books) !== undefined) || (books.push(result));
+        searchResults.forEach((result: IBook): void => {
+          if (this.findBookById(result.id, books) === undefined) {
+            books.push(result);
+          }
         });
       }
 
-      this.setState({ query, books });
+      this.setState({ books });
     });
   }
 
@@ -61,7 +73,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <Route
-          exact path="/search"
+          path="/search"
           render={({ history }) => (
             <SearchBooks
               query={this.state.query}
@@ -69,7 +81,7 @@ class App extends React.Component {
             />
         )}/>
         <Route
-          exact path="/"
+          path="/"
           render={({ history }) => (
             <Bookcase
               books={this.state.books}
