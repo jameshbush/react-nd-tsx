@@ -3,7 +3,7 @@ import {Route} from "react-router-dom";
 import "./App.css";
 import Bookcase from "./Bookcase";
 import * as BooksAPI from "./BooksAPI";
-import {IBook} from "./interfaces";
+import {IBook, IShelvedBookIds} from "./interfaces";
 import SearchBooks from "./SearchBooks";
 
 interface IAppState {
@@ -25,11 +25,11 @@ class App extends React.Component {
     });
   }
 
-  public updateQuery = (query: string) => {
-    BooksAPI.search(query, 100).then((searchResults) => {
+  public updateQuery = (query: string): void => {
+    BooksAPI.search(query).then((searchResults) => {
       const books = this.state.books;
 
-      if (searchResults.hasOwnProperty("length") && searchResults.length > 0) {
+      if (searchResults && searchResults.hasOwnProperty("length") && searchResults.length > 0) {
         searchResults.forEach((result: any) => {
           return (this.findBookById(result.id, books) !== undefined) || (books.push(result));
         });
@@ -50,8 +50,9 @@ class App extends React.Component {
     }
 
     BooksAPI.update(book, shelf)
-    .then((shelvedBookIds) => {
+    .then((shelvedBookIds: IShelvedBookIds) => {
       const updatedBooks = this.updateBookShelves(books, shelvedBookIds);
+
       this.setState({ books: updatedBooks });
     });
   }
@@ -60,7 +61,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <Route
-          path="/search"
+          exact path="/search"
           render={({ history }) => (
             <SearchBooks
               query={this.state.query}
@@ -68,7 +69,7 @@ class App extends React.Component {
             />
         )}/>
         <Route
-          path="/"
+          exact path="/"
           render={({ history }) => (
             <Bookcase
               books={this.state.books}
@@ -84,18 +85,18 @@ class App extends React.Component {
     return books.find((book) => (bookId === book.id));
   }
 
-  private updateBookShelves = (books: IBook[], shelvedBookIds: any) => { // actually a string[]
-    for (const shelf of shelvedBookIds) {
-      const theShelf: string = shelf;
+  private updateBookShelves = (books: IBook[], shelvedBookIds: IShelvedBookIds) => {
+    const shelvedBookIdKeys: string[] = Object.keys(shelvedBookIds);
 
-      shelvedBookIds[theShelf].forEach((bookId: string) => {
-        const book = this.findBookById(bookId, books);
+    shelvedBookIdKeys.forEach((shelfKey: string) => {
+      shelvedBookIds[shelfKey].forEach((bookId: string) => {
+        const book: IBook | undefined = this.findBookById(bookId, books);
 
         if (book) {
-          book.shelf = shelf;
+          book.shelf = shelfKey;
         }
       });
-    }
+    });
 
     return books;
   }

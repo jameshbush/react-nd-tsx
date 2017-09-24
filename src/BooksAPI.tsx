@@ -31,7 +31,7 @@ export const update = (book: IBook, shelf: string) =>
     body: JSON.stringify({ shelf }),
   }).then((res) => res.json());
 
-export const search = (query: string, maxResults: number) =>
+export const search = (query: string, maxResults: number = 50) =>
   fetch(`${api}/search`, {
     method: "POST",
     headers: {

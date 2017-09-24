@@ -5,6 +5,8 @@ import {ISearchBooksProps} from "./interfaces";
 
 class SearchBooks extends React.Component <ISearchBooksProps> {
   public render() {
+    const {query, updateQuery} = this.props;
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -26,8 +28,8 @@ class SearchBooks extends React.Component <ISearchBooksProps> {
             */}
             <input
               type="text"
-              value={this.props.query}
-              onChange={(e) => this.props.updateQuery(e.target.value)}
+              value={query}
+              onChange={(e) => updateQuery(e.target.value)}
             />
           </div>
         </div>

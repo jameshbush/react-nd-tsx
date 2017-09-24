@@ -8,6 +8,7 @@ class BookshelfChanger extends React.Component <IBookshelfChangerProps> {
 
     return (
       <div className="book-shelf-changer">
+
         <form>
           <select onChange={this.handleChange} defaultValue={book.shelf || "none"}>
             <option value="instructions" disabled>Move to...</option>
