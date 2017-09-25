@@ -26,15 +26,11 @@ class App extends React.Component {
   }
 
   public updateQuery = (query: string): void => {
-    const bookIsShelved = (book: IBook) => book.shelf;
-
     if (query === this.state.query) {
       return undefined;
     } else {
-      this.setState({
-        query,
-        books: this.state.books.filter(bookIsShelved),
-      });
+      const bookIsShelved = (book: IBook) => book.shelf;
+      this.setState(() => ({query, books: this.state.books.filter(bookIsShelved)}));
     }
 
     BooksAPI.search(query, 10)
@@ -57,16 +53,12 @@ class App extends React.Component {
     const books = this.state.books;
 
     if (shelf === "none") {
-      const bookToUnshelve: IBook | undefined = this.findBookById(book.id, books);
-      if (bookToUnshelve) {
-        bookToUnshelve.shelf = undefined;
-      }
+      this.unshelveBook(book, books, shelf);
     }
 
     BooksAPI.update(book, shelf)
-    .then((shelvedBookIds: IShelvedBookIds) => {
+    .then((shelvedBookIds: IShelvedBookIds): void => {
       const updatedBooks = this.updateBookShelves(books, shelvedBookIds);
-
       this.setState({ books: updatedBooks });
     });
   }
@@ -95,11 +87,11 @@ class App extends React.Component {
     );
   }
 
-  private findBookById = (bookId: string, books: IBook[]) => {
+  private findBookById = (bookId: string, books: IBook[]): IBook | undefined => {
     return books.find((book) => (bookId === book.id));
   }
 
-  private updateBookShelves = (books: IBook[], shelvedBookIds: IShelvedBookIds) => {
+  private updateBookShelves = (books: IBook[], shelvedBookIds: IShelvedBookIds): IBook[] => {
     const shelvedBookIdKeys: string[] = Object.keys(shelvedBookIds);
 
     shelvedBookIdKeys.forEach((shelfKey: string) => {
@@ -113,6 +105,13 @@ class App extends React.Component {
     });
 
     return books;
+  }
+
+  private unshelveBook = (book: IBook, books: IBook[], shelf: string): void => {
+    const bookToUnshelve: IBook | undefined = this.findBookById(book.id, books);
+    if (bookToUnshelve) {
+      bookToUnshelve.shelf = undefined;
+    }
   }
 
 }
