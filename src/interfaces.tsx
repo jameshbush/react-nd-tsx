@@ -21,26 +21,28 @@ export interface IBookcaseProps {
 export interface IBookshelfProps {
   books: IBook[];
   name: string;
-  update: (book: IBook, shelf: string) => void;
+  update: IUpdate;
   shelves: IShelf[];
 }
 
 export interface IBookProps {
   book: IBook;
-  update: (book: IBook, shelf: string) => void;
+  update: IUpdate;
   shelves: IShelf[];
 }
 
 export interface IBookshelfChangerProps {
   book: IBook;
   shelves: IShelf[];
-  update: (book: IBook, shelf: string) => void;
+  update: IUpdate;
 }
 
 //
 
 export interface IApp {
 }
+
+export type IUpdate = (book: IBook, shelf: string) => void;
 
 export interface IBookcase {
 }

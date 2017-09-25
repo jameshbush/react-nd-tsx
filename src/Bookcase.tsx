@@ -2,12 +2,13 @@ import * as React from "react";
 import {Link} from "react-router-dom";
 import Bookshelf from "./Bookshelf";
 import IconOpenSearch from "./icons/IconOpenSearch";
-import {IBookcaseProps, IShelf} from "./interfaces";
+import {IBook, IBookcaseProps, IShelf, IUpdate} from "./interfaces";
 
 class Bookcase extends React.Component <IBookcaseProps> {
   public render() {
-    let { books } = this.props;
-    const { query, update } = this.props;
+    let   books: IBook[] = this.props.books;
+    const query: string = this.props.query;
+    const update: IUpdate = this.props.update;
     const emptyShelves: IShelf[] = [
       { key: "currentlyReading", name: "Currently Reading" },
       { key: "wantToRead", name: "Want to Read" },
@@ -31,7 +32,7 @@ class Bookcase extends React.Component <IBookcaseProps> {
         </div>
         <div className="list-books-content">
           {shelvedBooks
-            .map((shelf: any) => (
+            .map((shelf: IShelf) => (
               shelf.books && <Bookshelf
                 key={shelf.key}
                 name={shelf.name}
@@ -45,31 +46,37 @@ class Bookcase extends React.Component <IBookcaseProps> {
     );
   }
 
-  private shelveBooks(books: any, shelves: any) {
-    books.forEach((book: any) => {
-      const shelf = shelves.find((s: any) => s.key === book.shelf) ||
-                    shelves.find((s: any) => s.key === "none");
+  private shelveBooks(books: IBook[], shelves: IShelf[]): IShelf[] {
+    books.forEach((book: IBook) => {
+      const shelf: IShelf | undefined = (
+        shelves.find((s: IShelf) => s.key === book.shelf) ||
+        shelves.find((s: IShelf) => s.key === "none")
+      );
 
-      if (!shelf.books) {
+      if (shelf && !shelf.books) {
         shelf.books = [];
       }
 
-      shelf.books.push(book);
+      if (shelf && shelf.books) {
+        shelf.books.push(book);
+      }
     });
+
     return shelves;
   }
 
-  private filterBooks(books: any, query: any) {
+  private filterBooks(books: IBook[], query: string): IBook[] {
     if (query) {
       const match = new RegExp(this.escapeRegExp(query), "i");
-      books = books.filter((b: any) => match.test(b.title + b.authors));
+      books = books.filter((b: IBook) => match.test(b.title + b.authors));
     }
     return books;
   }
 
-  private escapeRegExp = (str: string) => {
+  private escapeRegExp = (str: string): string => {
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
   }
+
 }
 
 export default Bookcase;
