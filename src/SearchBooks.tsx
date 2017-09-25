@@ -13,9 +13,9 @@ class SearchBooks extends React.Component <ISearchBooksProps> {
           <Link
             to="/"
             className="close-search"
-            onClick={((e) => updateQuery(""))}
+            onClick={this.resetQuery}
           >
-            <IconArrowBack padding=""/>
+            <IconArrowBack />
           </Link>
           <div className="search-books-input-wrapper">
             {/*
@@ -29,14 +29,19 @@ class SearchBooks extends React.Component <ISearchBooksProps> {
             */}
             <input
               type="text"
+              placeholder="Search"
               value={query}
-              onChange={(e) => updateQuery(e.target.value)}
+              onChange={this.changeQuery}
             />
           </div>
         </div>
       </div>
     );
   }
+
+  private resetQuery = () => this.props.updateQuery("");
+
+  private changeQuery = (e: any) => this.props.updateQuery(e.target.value);
 }
 
 export default SearchBooks;

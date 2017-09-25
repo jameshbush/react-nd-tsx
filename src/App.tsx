@@ -20,18 +20,20 @@ class App extends React.Component {
 
   public componentDidMount() {
     BooksAPI.getAll()
-    .then((books) => {
+    .then((books: IBook[]) => {
       this.setState({ books });
     });
   }
 
   public updateQuery = (query: string): void => {
+    const bookIsShelved = (book: IBook) => book.shelf;
+
     if (query === this.state.query) {
       return undefined;
     } else {
       this.setState({
         query,
-        books: this.state.books.filter((b) => b.shelf),
+        books: this.state.books.filter(bookIsShelved),
       });
     }
 
