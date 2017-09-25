@@ -8,8 +8,8 @@ class BookshelfChanger extends React.Component <IBookshelfChangerProps> {
 
     return (
       <div className="book-shelf-changer">
-
-        <form>
+        <IconArrowDropDown />
+        <form style={{marginTop: -40, height: "100%"}}>
           <select onChange={this.handleChange} defaultValue={book.shelf || "none"}>
             <option value="instructions" disabled>Move to...</option>
             {shelves.map((shelf: any) =>
