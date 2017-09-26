@@ -1,8 +1,18 @@
+// Guidelines for organizing dependencies
+// first, by distance
+// then, alphabetically
+// npm node modules at very top with third party dependencies
+// Bookshelf is a close colaborator, so it's further down the list
+// then deal with the irregular imports with require statements etc.
+
 import * as React from "react";
 import {Link} from "react-router-dom";
+
 import Bookshelf from "./Bookshelf";
 import IconOpenSearch from "./icons/IconOpenSearch";
 import {IBook, IBookcaseProps, IShelf, IUpdate} from "./interfaces";
+
+const sortBy = require("sort-by"); // tslint:disable-line no-var-requires
 
 class Bookcase extends React.Component <IBookcaseProps> {
   public render() {
@@ -17,7 +27,7 @@ class Bookcase extends React.Component <IBookcaseProps> {
     ];
 
     books = this.filterBooks(books, query);
-    // books = books.sort("title");
+    books = books.sort(sortBy("title"));
     const shelvedBooks = this.shelveBooks(books, emptyShelves);
 
     return (

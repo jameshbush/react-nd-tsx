@@ -1,5 +1,6 @@
 import * as React from "react";
 import BookshelfChanger from "./BookshelfChanger";
+
 import {IBookProps} from "./interfaces";
 
 class Book extends React.Component <IBookProps> {

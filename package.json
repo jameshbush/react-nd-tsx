@@ -14,7 +14,8 @@
     "escape-string-regexp": "^1.0.5",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "sort-by": "^1.2.0"
   },
   "devDependencies": {
     "@types/node": "^8.0.28",
