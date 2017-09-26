@@ -16,9 +16,8 @@ const sortBy = require("sort-by"); // tslint:disable-line no-var-requires
 
 class Bookcase extends React.Component <IBookcaseProps> {
   public render() {
-    let   books: IBook[] = this.props.books;
-    const query: string = this.props.query;
-    const update: IUpdate = this.props.update;
+    let   {books} = this.props;
+    const {query, update} = this.props;
     const emptyShelves: IShelf[] = [
       { key: "currentlyReading", name: "Currently Reading" },
       { key: "wantToRead", name: "Want to Read" },

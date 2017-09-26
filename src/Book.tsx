@@ -1,7 +1,7 @@
 import * as React from "react";
 import BookshelfChanger from "./BookshelfChanger";
 
-import {IBookProps} from "./interfaces";
+import {IBook, IBookProps} from "./interfaces";
 
 class Book extends React.Component <IBookProps> {
   public render() {
@@ -23,7 +23,7 @@ class Book extends React.Component <IBookProps> {
     );
   }
 
-  private styleCover = (book: any) => {
+  private styleCover = (book: IBook) => {
     return {
       width: 128,
       height: 193,

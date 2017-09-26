@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import IconArrowDropDown from "./icons/IconArrowDropDown";
-import {IBookshelfChangerProps} from "./interfaces";
+import {IBookshelfChangerProps, IShelf} from "./interfaces";
 
 class BookshelfChanger extends React.Component <IBookshelfChangerProps> {
   public render() {
@@ -13,7 +13,7 @@ class BookshelfChanger extends React.Component <IBookshelfChangerProps> {
         <form style={{marginTop: -40, height: "100%"}}>
           <select onChange={this.handleChange} defaultValue={book.shelf || "none"}>
             <option value="instructions" disabled>Move to...</option>
-            {shelves.map((shelf: any) =>
+            {shelves.map((shelf: IShelf) =>
               <option
                 key={shelf.key}
                 value={shelf.key}
